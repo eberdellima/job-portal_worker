@@ -6,10 +6,11 @@ const { promisify } = require('util')
 // const getASync = promisify(client.get).bind(client)
 const setAsync = promisify(client.set).bind(client)
 
-const baseUrl = 'https://jobs.github.com/positions.json'
+const baseUrl = require('../configs/index')
+const jobsFilter = require('../utils/jobs-filter')
 
 async function fetchGithub() {
-
+  
   const allJobs = []
   let result = 1, page = 0
 
@@ -21,31 +22,12 @@ async function fetchGithub() {
     allJobs.push(...jobs.data)
   }
 
-  console.log('All job:', allJobs.length)
-
   //  filter algorithm
-  const filteredJobs = allJobs.filter(job => {
-    const jobTitle = job.title.toLowerCase()
-
-    //  algo logic
-    if(
-      jobTitle.includes('senior') ||
-      jobTitle.includes('manager') ||
-      jobTitle.includes('sr.') ||
-      jobTitle.includes('architect')
-    ) {
-      return false
-    } else {
-      return true
-    }
-
-  })
-
-  console.log('Filtered job:', filteredJobs.length)
+  const filteredJobs = allJobs.filter(jobsFilter)
 
   //  set in redis
   const success = await setAsync('github', JSON.stringify(filteredJobs))
-  console.log({success})
+  // console.log({success})
 }
 
 module.exports = fetchGithub

@@ -2,4 +2,4 @@ const CronJob = require('cron').CronJob
 
 const fetchGithub = require('./tasks/fetch-github')
 
-new CronJob('* * * * *', fetchGithub, null, true)
+new CronJob('*/2 * * * *', fetchGithub, null, true)
