@@ -8,3 +8,7 @@ It would e better to install an process manager like PM2 while running the worke
 ## todo
 
 - add logger
+
+## Contributors
+
+[Ergi Berdellima](https://github.com/Bhfreagra)
