@@ -1,4 +1,4 @@
-export default function jobFilter(job) {
+function jobFilter(job) {
   const jobTitle = job.title.toLowerCase()
 
     if(
@@ -12,3 +12,5 @@ export default function jobFilter(job) {
     
     return true
 }
+
+module.exports = jobFilter
